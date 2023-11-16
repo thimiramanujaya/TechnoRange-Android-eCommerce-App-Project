@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">TechnoRange</string>
+
+    <string name="onboard_heading_one">Welcome to TechnoRange!</string>
+    <string name="onboard_heading_two">Find What You Need</string>
+    <string name="onboard_heading_three">Easy and Safe Checkout</string>
+
+    <string name="onboard_descript_one">Your Online Marketplace for all Tech Needs and Online Seller Hub for all Tech Trades.
+        Explore a world of computer peripherals, where trading meets convenience. Discover, connect, and trade seamlessly.
+        Let\'s get started on your tech journey! </string>
+    <string name="onboard_descript_two">Dive into our extensive range of computer parts with ease. Use the search bar to find
+        specific items or refine your search with our intuitive filters. Your perfect computer upgrade is just a click away. </string>
+    <string name="onboard_descript_three">Ready to make your purchase? Enjoy a hassle-free checkout experience. Enter your billing details,
+        choose a convenient payment option, and review your order before confirming. \nWe ensure a secure and smooth checkout for your
+        peace of mind. </string>
+
 </resources>
