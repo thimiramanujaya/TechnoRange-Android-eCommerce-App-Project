@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 
@@ -23,6 +25,8 @@ public class StartActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ImageButton nextBtn;
     int position = 0;
+    Button skipBtn, getStartedBtn;
+    Animation getStartBtnAnim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +52,28 @@ public class StartActivity extends AppCompatActivity {
         viewPageAdapter = new ViewPageAdapter(this, layoutContent);
         viewPagerSlide.setAdapter(viewPageAdapter);
 
-
         tabLayout = findViewById(R.id.dot_layout);
         tabLayout.setupWithViewPager(viewPagerSlide);
+
+        //add tabLayout change Listener
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(tab.getPosition() == layoutContent.size()-1) {
+                    loadLastPage();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         nextBtn = findViewById(R.id.next_btn);
         nextBtn.setOnClickListener(new View.OnClickListener() {
@@ -61,14 +84,27 @@ public class StartActivity extends AppCompatActivity {
                     position++;
                     viewPagerSlide.setCurrentItem(position);
                 }
-                if(position == layoutContent.size()) {  // when reach to the last page
-                    loadLastPage();
-                }
+
             }
         });
+
+        skipBtn = findViewById(R.id.skip_btn);
+        getStartedBtn = findViewById(R.id.get_started_btn);
+        getStartBtnAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.get_started_btn_anim);
 
     }
 
     private void loadLastPage() {
+
+        skipBtn.setVisibility(View.INVISIBLE);
+        nextBtn.setVisibility(View.INVISIBLE);
+        tabLayout.setVisibility(View.INVISIBLE);
+        getStartedBtn.setVisibility(View.VISIBLE);
+
+        // TODO : Set Animation to getStartedBtn
+
+        //setup animation
+        getStartedBtn.startAnimation(getStartBtnAnim);
+
     }
 }
