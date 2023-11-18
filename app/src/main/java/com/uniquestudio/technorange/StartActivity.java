@@ -3,6 +3,8 @@ package com.uniquestudio.technorange;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -35,6 +37,13 @@ public class StartActivity extends AppCompatActivity {
         // set activity to fullscreen *Note- Insert snippet before setting Activity layout xml
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        // check whether startActivity has opened early, when startActivity is about to launch
+        if(retrievePrefs()) {
+            Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(mainActivity);
+            finish();
+        }
 
         setContentView(R.layout.activity_start);
 
@@ -92,6 +101,43 @@ public class StartActivity extends AppCompatActivity {
         getStartedBtn = findViewById(R.id.get_started_btn);
         getStartBtnAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.get_started_btn_anim);
 
+        skipBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(mainActivity);
+
+                // save boolean value in shared prefs to check whether user has already viewed the StartActivity
+                savePrefs();
+                finish();
+            }
+        });
+
+        getStartedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(mainActivity);
+
+                // save boolean value in shared prefs to check whether user has already view the StartActivity
+                savePrefs();
+                finish();
+            }
+        });
+
+    }
+
+    private void savePrefs() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("isStartActivityOpened", true);
+        editor.apply();
+    }
+
+    private boolean retrievePrefs() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPref", MODE_PRIVATE);
+        Boolean isStartActivityOpened = pref.getBoolean("isStartActivityOpened", false);
+        return isStartActivityOpened;
     }
 
     private void loadLastPage() {
