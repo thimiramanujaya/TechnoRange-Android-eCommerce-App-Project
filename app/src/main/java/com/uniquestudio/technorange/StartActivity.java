@@ -40,8 +40,8 @@ public class StartActivity extends AppCompatActivity {
 
         // check whether startActivity has opened early, when startActivity is about to launch
         if(retrievePrefs()) {
-            Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(mainActivity);
+            Intent splashActivity = new Intent(getApplicationContext(), SplashActivity.class);
+            startActivity(splashActivity);
             finish();
         }
 
@@ -104,8 +104,8 @@ public class StartActivity extends AppCompatActivity {
         skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(mainActivity);
+                Intent splashActivity = new Intent(getApplicationContext(), SplashActivity.class);
+                startActivity(splashActivity);
 
                 // save boolean value in shared prefs to check whether user has already viewed the StartActivity
                 savePrefs();
@@ -116,8 +116,8 @@ public class StartActivity extends AppCompatActivity {
         getStartedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(mainActivity);
+                Intent splashActivity = new Intent(getApplicationContext(), SplashActivity.class);
+                startActivity(splashActivity);
 
                 // save boolean value in shared prefs to check whether user has already view the StartActivity
                 savePrefs();

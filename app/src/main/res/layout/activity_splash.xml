@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context=".SplashActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_logo"
+        android:foregroundGravity="center"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="200dp">
+    </ImageView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="30sp"
+        android:fontFamily="@font/productsansregular"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="20dp">
+    </TextView>
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/progr_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        />
+
+    <TextView
+        android:id="@+id/progress_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loading.."
+        android:gravity="center"
+        android:textSize="18sp"
+        android:fontFamily="@font/sfprodisplay">
+    </TextView>
+
+</LinearLayout>
