@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "857267683186",
+    "project_id": "technorange-e961a",
+    "storage_bucket": "technorange-e961a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857267683186:android:11d38616597a385828e7eb",
+        "android_client_info": {
+          "package_name": "com.uniquestudio.technorange"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACQ9dXHcCPPzWXreZB7fzutYralbiKpzU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
