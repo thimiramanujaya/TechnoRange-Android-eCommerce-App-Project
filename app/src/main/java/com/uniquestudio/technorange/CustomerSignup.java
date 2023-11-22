@@ -125,9 +125,9 @@ public class CustomerSignup extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // check whether given email or username already exists on the db
                  if((snapshot.child("Users").child(username).exists())) {
-                     Toast.makeText(getApplicationContext(), "Already SignUp using this Email or Username",Toast.LENGTH_SHORT).show();
+                     Toast.makeText(getApplicationContext(), "Already SignUp using this Username",Toast.LENGTH_SHORT).show();
                      progressDialog.dismiss();
-                     Toast.makeText(getApplicationContext(), "Try Again with different Email or Username",Toast.LENGTH_SHORT).show();
+                     Toast.makeText(getApplicationContext(), "Try Again with different Username",Toast.LENGTH_SHORT).show();
                  }
                  else {
                      HashMap<String, Object> customerDataMap = new HashMap<>();
