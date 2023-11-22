@@ -96,9 +96,22 @@ public class LoginActivity extends AppCompatActivity {
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                // check whether given username is already exists on the db
-                if((snapshot.child("Users").child(uname).exists())) {
-                    Users usersData = snapshot.child("Users").child(uname).getValue(Users.class);
+                // check whether given username is already exists on the db as a customer username
+                if((snapshot.child("Customers").child(uname).exists())) {
+                    Users usersData = snapshot.child("Customers").child(uname).getValue(Users.class);
+                    // verify given username and password with firebase
+                    if(usersData.getUsername().equals(uname) && usersData.getPassword().equals(pwd)) {
+                        Toast.makeText(getApplicationContext(), "Welcome to TechnoRange!!",Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }
+                    else {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "Invalid Credentials!! Try Again",Toast.LENGTH_SHORT).show();
+                    }
+                }
+                // check whether given username is already exists on the db as seller username
+                else if ((snapshot.child("Sellers").child(uname).exists())) {
+                    Users usersData = snapshot.child("Sellers").child(uname).getValue(Users.class);
                     // verify given username and password with firebase
                     if(usersData.getUsername().equals(uname) && usersData.getPassword().equals(pwd)) {
                         Toast.makeText(getApplicationContext(), "Welcome to TechnoRange!!",Toast.LENGTH_SHORT).show();

@@ -28,10 +28,10 @@
                 android:lineSpacingExtra="8sp"
                 android:text="SignUp as a Seller"
                 android:textColor="#00F0F8"
-                android:textSize="40sp"
+                android:textSize="42sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.3"
+                app:layout_constraintHorizontal_bias="0.2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

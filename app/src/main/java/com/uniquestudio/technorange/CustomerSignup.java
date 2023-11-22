@@ -124,7 +124,7 @@ public class CustomerSignup extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // check whether given email or username already exists on the db
-                 if((snapshot.child("Users").child(username).exists())) {
+                 if((snapshot.child("Customers").child(username).exists())) {
                      Toast.makeText(getApplicationContext(), "Already SignUp using this Username",Toast.LENGTH_SHORT).show();
                      progressDialog.dismiss();
                      Toast.makeText(getApplicationContext(), "Try Again with different Username",Toast.LENGTH_SHORT).show();
@@ -138,7 +138,7 @@ public class CustomerSignup extends AppCompatActivity {
                      customerDataMap.put("username", username);
                      customerDataMap.put("password", password);
 
-                     RootRef.child("Users").child(username).updateChildren(customerDataMap)
+                     RootRef.child("Customers").child(username).updateChildren(customerDataMap)
                              .addOnCompleteListener(new OnCompleteListener<Void>() {
                                  @Override
                                  public void onComplete(@NonNull Task<Void> task) {
