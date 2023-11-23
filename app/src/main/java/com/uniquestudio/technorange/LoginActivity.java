@@ -3,9 +3,11 @@ package com.uniquestudio.technorange;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -66,6 +68,10 @@ public class LoginActivity extends AppCompatActivity {
         String uname = unameEdt.getText().toString();
         String pwd = passwordEdt.getText().toString();
 
+        // hide keyboard
+        InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(passwordEdt.getWindowToken(), 0);
+
         if(uname.isEmpty()) {
             unameEdt.setError("Username cannot be Empty");
             Toast.makeText(getApplicationContext(), "Username is Required",Toast.LENGTH_LONG).show();
@@ -103,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(usersData.getUsername().equals(uname) && usersData.getPassword().equals(pwd)) {
                         Toast.makeText(getApplicationContext(), "Welcome to TechnoRange!!",Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
+
                     }
                     else {
                         progressDialog.dismiss();
@@ -116,6 +123,8 @@ public class LoginActivity extends AppCompatActivity {
                     if(usersData.getUsername().equals(uname) && usersData.getPassword().equals(pwd)) {
                         Toast.makeText(getApplicationContext(), "Welcome to TechnoRange!!",Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
+                        Intent sellerActivity = new Intent(LoginActivity.this, SellerActivity.class);
+                        startActivity(sellerActivity);
                     }
                     else {
                         progressDialog.dismiss();

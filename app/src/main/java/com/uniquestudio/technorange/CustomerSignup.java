@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -77,6 +79,10 @@ public class CustomerSignup extends AppCompatActivity {
         String username = usernameEdt.getText().toString();
         String password = passwordEdt.getText().toString();
         String c_password = cpasswordEdt.getText().toString();
+
+        // hide keyboard
+        InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(cpasswordEdt.getWindowToken(), 0);
 
         if(name.isEmpty()) {
             nameEdt.setError("Name is Required");
