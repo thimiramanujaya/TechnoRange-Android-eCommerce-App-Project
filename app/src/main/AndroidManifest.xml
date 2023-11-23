@@ -9,11 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TechnoRange">
-        <activity android:name=".SellerSignup"></activity>
+        <activity
+            android:name=".AddProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SellerActivity"
+            android:exported="false" />
+        <activity android:name=".SellerSignup" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".CustomerSignup" />
         <activity android:name=".SplashActivity" />
-        <activity android:name=".StartActivity" android:exported="true">
+        <activity
+            android:name=".StartActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
