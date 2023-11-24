@@ -109,7 +109,8 @@ public class LoginActivity extends AppCompatActivity {
                     if(usersData.getUsername().equals(uname) && usersData.getPassword().equals(pwd)) {
                         Toast.makeText(getApplicationContext(), "Welcome to TechnoRange!!",Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
-
+                        Intent customerActivity = new Intent(LoginActivity.this, CustomerActivity.class);
+                        startActivity(customerActivity);
                     }
                     else {
                         progressDialog.dismiss();
