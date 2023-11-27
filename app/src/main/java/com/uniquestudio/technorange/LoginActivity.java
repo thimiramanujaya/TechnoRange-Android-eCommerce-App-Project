@@ -110,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Welcome to TechnoRange!!",Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                         Intent customerActivity = new Intent(LoginActivity.this, CustomerActivity.class);
+                        CurrentUser.currentOnlineUser = usersData;
                         startActivity(customerActivity);
                     }
                     else {
@@ -125,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Welcome to TechnoRange!!",Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                         Intent sellerActivity = new Intent(LoginActivity.this, SellerActivity.class);
+                        CurrentUser.currentOnlineUser = usersData;
                         startActivity(sellerActivity);
                     }
                     else {
