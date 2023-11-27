@@ -17,4 +17,12 @@
     <string name="activity_main_descript"> Kick-start your journey by creating an account today! Whether you\'re a customer or seller,
         simply register to unlock a world of possibilities. Unleash the power in seamless world of online computer parts trading right now! </string>
 
+    <string name="banner_heading_one">Save Big with Our App</string>
+    <string name="banner_heading_two">Enjoy Doorstep Delivery of Your Purchase</string>
+    <string name="banner_heading_three">Checkout Securely, Easily with Our App</string>
+
+    <string name="banner_descript_one">Discover and enjoy the best prices, incredible discounts, offers, deals, and promotions on top brands and categories.</string>
+    <string name="banner_descript_two">We offer fast and easy doorstep delivery of your computer items, with free shipping on orders above a certain amount.</string>
+    <string name="banner_descript_three">Don’t worry about your payment details or personal information and complete your purchase in just a few clicks.</string>
+
 </resources>
