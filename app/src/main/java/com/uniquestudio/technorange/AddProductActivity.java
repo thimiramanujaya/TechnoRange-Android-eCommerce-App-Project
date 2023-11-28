@@ -34,7 +34,7 @@ import java.util.HashMap;
 
 public class AddProductActivity extends AppCompatActivity {
 
-    ImageView productImgV;
+    ImageView productImgVEdt;
     EditText productTitleEdt, productPriceEdt, productAvailQuantityEdt, productDescriptEdt;
     Button productAddBtn;
 
@@ -61,7 +61,7 @@ public class AddProductActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        productImgV = findViewById(R.id.product_imgv);
+        productImgVEdt = findViewById(R.id.product_imgv_edt);
 
         productTitleEdt = findViewById(R.id.product_title_edt);
         productPriceEdt = findViewById(R.id.product_price_edt);
@@ -70,8 +70,8 @@ public class AddProductActivity extends AppCompatActivity {
 
         productAddBtn = findViewById(R.id.product_add_btn);
         progressDialog = new ProgressDialog(this);
-                
-        productImgV.setOnClickListener(new View.OnClickListener() {
+
+        productImgVEdt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openGallery();
@@ -137,7 +137,7 @@ public class AddProductActivity extends AppCompatActivity {
         currentTime = timeFormat.format(calendar.getTime());
 
         // instead of generating firebase random key for each product, here trying to create unique identifierKey using currentTime and currentTime
-        productIdentifierKey = currentDate + currentTime;
+        productIdentifierKey = currentDate +"-"+ currentTime;
 
         StorageReference filePath = ProductImageRef.child(imageUri.getLastPathSegment() + productIdentifierKey + ".jpg");
         final UploadTask uploadTask = filePath.putFile(imageUri);
@@ -231,7 +231,7 @@ public class AddProductActivity extends AppCompatActivity {
 
         if(requestCode == galleryPick && resultCode == RESULT_OK && data != null) {
             imageUri = data.getData();
-            productImgV.setImageURI(imageUri);
+            productImgVEdt.setImageURI(imageUri);
         }
     }
 }
