@@ -2,63 +2,77 @@ package com.uniquestudio.technorange;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ExploreFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
+
+
 public class ExploreFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private DatabaseReference ProductRef;
+    RecyclerView productsRecylV;
+    RecyclerView.LayoutManager productsLytManager;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public ExploreFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ExploreFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ExploreFragment newInstance(String param1, String param2) {
-        ExploreFragment fragment = new ExploreFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_explore, container, false);
+        View view = inflater.inflate(R.layout.fragment_explore, container, false);
+
+        ProductRef = FirebaseDatabase.getInstance("https://technorange-3b319-default-rtdb.asia-southeast1.firebasedatabase.app").getReference().child("Products");
+
+        productsRecylV = view.findViewById(R.id.products_recylv);
+        //productsRecylV.setHasFixedSize(true);
+
+        productsLytManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        productsRecylV.setLayoutManager(productsLytManager);
+
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        FirebaseRecyclerOptions<Products> firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<Products>()
+                .setQuery(ProductRef, Products.class)
+                .build();
+
+        FirebaseRecyclerAdapter<Products, ProductViewHolder> firebaseRecyclerAdapter =
+                new FirebaseRecyclerAdapter<Products, ProductViewHolder>(firebaseRecyclerOptions) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull Products model) {
+                        holder.productTitleTxt.setText(model.getPtitle());
+                        holder.productPriceTxt.setText("Rs. "+model.getPrice());
+                        Picasso.get().load(model.getImage()).into(holder.productImgV);
+
+                    }
+
+                    @NonNull
+                    @Override
+                    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_product, parent, false);
+                        ProductViewHolder productViewHolder = new ProductViewHolder(view);
+                        return productViewHolder;
+                    }
+                };
+
+        productsRecylV.setAdapter(firebaseRecyclerAdapter);
+        firebaseRecyclerAdapter.startListening();
+
     }
 }
