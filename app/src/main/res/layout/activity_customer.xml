@@ -15,16 +15,13 @@
         android:id="@+id/bottom_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:backgroundTint="#00FFFFFF">
+        android:layout_gravity="bottom">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navig_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/signup_btn_backg"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_nav_menu" />
 
