@@ -47,6 +47,11 @@ public class CustomerActivity extends AppCompatActivity {
             return true;
         });
 
+        if(getIntent().getIntExtra("isNavigToCartFragment",0) == 1) {
+            bottomNavigationView.setSelectedItemId(R.id.cart);
+            replaceFragment(new CartFragment());
+        }
+
     }
 
     private void replaceFragment(Fragment fragment) {
