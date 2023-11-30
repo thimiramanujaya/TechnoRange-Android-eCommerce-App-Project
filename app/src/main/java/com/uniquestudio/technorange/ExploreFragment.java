@@ -1,5 +1,6 @@
 package com.uniquestudio.technorange;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -47,17 +48,26 @@ public class ExploreFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        FirebaseRecyclerOptions<Products> firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<Products>()
+        FirebaseRecyclerOptions<Products> firebaseProductsRecylOpts = new FirebaseRecyclerOptions.Builder<Products>()
                 .setQuery(ProductRef, Products.class)
                 .build();
 
-        FirebaseRecyclerAdapter<Products, ProductViewHolder> firebaseRecyclerAdapter =
-                new FirebaseRecyclerAdapter<Products, ProductViewHolder>(firebaseRecyclerOptions) {
+        FirebaseRecyclerAdapter<Products, ProductViewHolder> firebaseProductsRecylAdapter =
+                new FirebaseRecyclerAdapter<Products, ProductViewHolder>(firebaseProductsRecylOpts) {
                     @Override
                     protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull Products model) {
                         holder.productTitleTxt.setText(model.getPtitle());
                         holder.productPriceTxt.setText("Rs. "+model.getPrice());
                         Picasso.get().load(model.getImage()).into(holder.productImgV);
+
+                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent productDetailsActivity = new Intent(getActivity(), ProductDetailsActivity.class);
+                                productDetailsActivity.putExtra("pid", model.getPid());
+                                startActivity(productDetailsActivity);
+                            }
+                        });
 
                     }
 
@@ -71,8 +81,8 @@ public class ExploreFragment extends Fragment {
                     }
                 };
 
-        productsRecylV.setAdapter(firebaseRecyclerAdapter);
-        firebaseRecyclerAdapter.startListening();
+        productsRecylV.setAdapter(firebaseProductsRecylAdapter);
+        firebaseProductsRecylAdapter.startListening();
 
     }
 }
