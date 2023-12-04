@@ -29,7 +29,7 @@ import com.squareup.picasso.Picasso;
 
 public class CartFragment extends Fragment {
 
-    TextView myCartTxt, cartTotalTxt;
+    TextView myCartTxt, cartTotalTxt, noProductTxt;
     RecyclerView cartItemsRecylV;
     RecyclerView.LayoutManager cartListLytManager;
     ImageView cartSettingImgV, cartMoreOptImgV;
@@ -45,6 +45,7 @@ public class CartFragment extends Fragment {
 
         myCartTxt = view.findViewById(R.id.mycart_txt);
         cartTotalTxt = view.findViewById(R.id.cart_total_txt);
+        noProductTxt = view.findViewById(R.id.no_product_txt);
 
         cartItemsRecylV = view.findViewById(R.id.cartitems_recylv);
         cartListLytManager = new LinearLayoutManager(getContext());  // default vertical layout
@@ -58,6 +59,25 @@ public class CartFragment extends Fragment {
         String TotalPriceTxt = "Total: Rs. " + String.valueOf(TotalPrice);
         cartTotalTxt.setText(TotalPriceTxt);
 
+        cartCheckoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (TotalPrice != 0.0) {
+                    Intent checkoutActivity = new Intent(getActivity(), CheckoutActivity.class);
+                    startActivity(checkoutActivity);
+                }
+                else {
+                    Toast.makeText(getActivity(), "Please add products to cart before checkout", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        if (TotalPrice != 0.0) {
+            noProductTxt.setVisibility(View.GONE);
+        }
+        else {
+            noProductTxt.setVisibility(View.VISIBLE);
+        }
 
         return view;
     }
@@ -84,6 +104,13 @@ public class CartFragment extends Fragment {
                         float ItemSubTotal = Float.parseFloat(model.getPrice()) * Integer.parseInt(model.getQuantity());
                         TotalPrice = TotalPrice + ItemSubTotal;
 
+                        if (TotalPrice != 0.0) {
+                            noProductTxt.setVisibility(View.GONE);
+                        }
+                        else {
+                            noProductTxt.setVisibility(View.VISIBLE);
+                        }
+
                         String TotalPriceTxt = "Total: Rs. " + String.valueOf(TotalPrice);
                         cartTotalTxt.setText(TotalPriceTxt);
 
@@ -109,6 +136,13 @@ public class CartFragment extends Fragment {
 
                                         float ItemSubTotal = Float.parseFloat(model.getPrice()) * Integer.parseInt(model.getQuantity());
                                         TotalPrice = TotalPrice - ItemSubTotal;
+
+                                        if (TotalPrice != 0.0) {
+                                            noProductTxt.setVisibility(View.GONE);
+                                        }
+                                        else {
+                                            noProductTxt.setVisibility(View.VISIBLE);
+                                        }
 
                                         String TotalPriceTxt = "Total: Rs. " + String.valueOf(TotalPrice);
                                         cartTotalTxt.setText(TotalPriceTxt);

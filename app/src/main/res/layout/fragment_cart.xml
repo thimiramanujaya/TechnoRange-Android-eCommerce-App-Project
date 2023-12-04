@@ -108,6 +108,19 @@
 
         </ScrollView>
 
+        <TextView
+            android:id="@+id/no_product_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You haven't added any product to cart"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/productsansregular"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:layout_centerVertical="true"
+            android:visibility="gone"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
