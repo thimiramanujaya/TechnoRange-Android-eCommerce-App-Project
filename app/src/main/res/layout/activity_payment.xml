@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PaymentActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp">
+
+                <ImageButton
+                    android:id="@+id/payment_back_imgb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_arrow_back_24"
+                    android:layout_marginStart="5dp"
+                    android:backgroundTint="@android:color/transparent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Payment Method"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/productsansregular"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.325"
+                    app:layout_constraintStart_toEndOf="@id/payment_back_imgb"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginBottom="106dp">
+
+                <RadioGroup
+                    android:id="@+id/payment_radio_grp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/payment_radio_btn1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/skip_btn_backg"
+                        android:fontFamily="@font/sfprodisplay"
+                        android:text="Credit/ Debit Card"
+                        android:textSize="18sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:scaleType="fitStart"
+                            android:src="@drawable/payment_cards" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Card Number"
+                            android:textSize="18sp"
+                            android:fontFamily="@font/sfprodisplay"
+                            android:layout_marginTop="5dp"/>
+
+                        <EditText
+                            android:id="@+id/card_no_edt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:background="@drawable/user_input_outline"
+                            android:ems="20"
+                            android:fontFamily="@font/sfprodisplay"
+                            android:hint="Enter card number"
+                            android:inputType="number"
+                            android:padding="5dp"
+                            android:textColor="#FFFFFF"
+                            android:textColorHint="#B6B6B6"
+                            android:textSize="18sp"
+                            android:enabled="false"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Name on card"
+                            android:textSize="18sp"
+                            android:fontFamily="@font/sfprodisplay"
+                            android:layout_marginTop="10dp"/>
+
+                        <EditText
+                            android:id="@+id/name_on_card_edt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/user_input_outline"
+                            android:ems="20"
+                            android:fontFamily="@font/sfprodisplay"
+                            android:padding="5dp"
+                            android:layout_marginTop="2dp"
+                            android:hint="Enter name on card"
+                            android:textColor="#FFFFFF"
+                            android:textColorHint="#B6B6B6"
+                            android:textSize="18sp"
+                            android:enabled="false"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Expiration"
+                            android:textSize="18sp"
+                            android:fontFamily="@font/sfprodisplay"
+                            android:layout_marginTop="10dp"/>
+
+                        <EditText
+                            android:id="@+id/card_expire_edt"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:background="@drawable/user_input_outline"
+                            android:ems="5"
+                            android:fontFamily="@font/sfprodisplay"
+                            android:hint="MM/YY"
+                            android:padding="5dp"
+                            android:textColor="#FFFFFF"
+                            android:textColorHint="#B6B6B6"
+                            android:textSize="18sp"
+                            android:enabled="false"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="CVV"
+                            android:textSize="18sp"
+                            android:fontFamily="@font/sfprodisplay"
+                            android:layout_marginTop="10dp"/>
+
+                        <EditText
+                            android:id="@+id/cvv_edt"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/user_input_outline"
+                            android:ems="3"
+                            android:fontFamily="@font/sfprodisplay"
+                            android:padding="5dp"
+                            android:inputType="number"
+                            android:layout_marginTop="2dp"
+                            android:hint="Enter CVV"
+                            android:textColor="#FFFFFF"
+                            android:textColorHint="#B6B6B6"
+                            android:textSize="18sp"
+                            android:enabled="false"/>
+                    </LinearLayout>
+
+                    <RadioButton
+                        android:id="@+id/payment_radio_btn2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/skip_btn_backg"
+                        android:fontFamily="@font/sfprodisplay"
+                        android:text="Cash On Delivery"
+                        android:textSize="18sp"/>
+                </RadioGroup>
+
+            </ScrollView>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:paddingTop="3dp"
+        android:background="@drawable/user_input_outline"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/total_pay_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total : Rs. XXXX"
+            android:textSize="24sp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/productsansregular"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"/>
+
+        <Button
+            android:id="@+id/pay_now_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#6200EA"
+            android:fontFamily="@font/productsansregular"
+            android:text="Pay Now"
+            android:textAllCaps="false"
+            android:textColor="@color/teal_200"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toEndOf="@id/total_pay_txt"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</RelativeLayout>
