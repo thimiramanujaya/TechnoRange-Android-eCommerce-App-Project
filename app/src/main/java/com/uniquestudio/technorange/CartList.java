@@ -2,19 +2,20 @@ package com.uniquestudio.technorange;
 
 public class CartList {
 
-    private String pid, image, ptitle, price, quantity, discount;
+    private String pid, image, ptitle, price, quantity, discount, state;
 
     public CartList() {
 
     }
 
-    public CartList(String pid, String image, String ptitle, String price, String quantity, String discount) {
+    public CartList(String pid, String image, String ptitle, String price, String quantity, String discount, String state) {
         this.pid = pid;
         this.image = image;
         this.ptitle = ptitle;
         this.price = price;
         this.quantity = quantity;
         this.discount = discount;
+        this.state = state;
     }
 
     public String getPid() {
@@ -63,5 +64,13 @@ public class CartList {
 
     public void setDiscount(String discount) {
         this.discount = discount;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }
