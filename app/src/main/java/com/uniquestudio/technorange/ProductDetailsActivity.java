@@ -160,6 +160,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             cartMap.put("price", products.getPrice());
             cartMap.put("quantity", quantityTxt2.getText().toString());
             cartMap.put("discount", "");
+            cartMap.put("state", "added to cart");
 
             CartListRef.child(CurrentUser.currentOnlineUser.getUsername()).child("CartProducts").child(ProductID)
                     .updateChildren(cartMap)

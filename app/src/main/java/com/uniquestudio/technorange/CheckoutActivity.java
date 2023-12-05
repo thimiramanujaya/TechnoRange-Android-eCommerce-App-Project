@@ -37,12 +37,13 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 public class CheckoutActivity extends AppCompatActivity {
 
-    ImageButton checkoutBackImgb;
+    ImageButton checkoutBackImgB;
     EditText fullNameEdt, shippingAddrEdt, phoneEdt, emailEdt;
-    RecyclerView checkoutItemsRecylv;
+    RecyclerView checkoutItemsRecylV;
     RecyclerView.LayoutManager checkoutListLytManager;
     TextView itemTotalTxt, deliveryFeeTxt, totalTxt;
     Button placeOrderBtn;
@@ -64,8 +65,8 @@ public class CheckoutActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        checkoutBackImgb = findViewById(R.id.checkout_back_imgb);
-        checkoutBackImgb.setOnClickListener(new View.OnClickListener() {
+        checkoutBackImgB = findViewById(R.id.checkout_back_imgb);
+        checkoutBackImgB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
@@ -82,9 +83,9 @@ public class CheckoutActivity extends AppCompatActivity {
         phoneEdt.setText(CurrentUser.currentOnlineUser.getPhone());
         emailEdt.setText(CurrentUser.currentOnlineUser.getEmail());
 
-        checkoutItemsRecylv = findViewById(R.id.checkout_items_recylv);
+        checkoutItemsRecylV = findViewById(R.id.checkout_items_recylv);
         checkoutListLytManager = new LinearLayoutManager(this);  // default vertical layout
-        checkoutItemsRecylv.setLayoutManager(checkoutListLytManager);
+        checkoutItemsRecylV.setLayoutManager(checkoutListLytManager);
 
         itemTotalTxt = findViewById(R.id.item_total_txt);
         deliveryFeeTxt = findViewById(R.id.delivery_fee_txt);
@@ -139,30 +140,29 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private void placeOrder() {
 
-        String getCurrentDate, getCurrentTime;
+        String currentDate, currentTime;
 
         Calendar calendar = Calendar.getInstance();
 
-        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
-        getCurrentDate =  currentDate.format(calendar.getTime());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        currentDate =  dateFormat.format(calendar.getTime());
 
-        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
-        getCurrentTime =  currentTime.format(calendar.getTime());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss a");
+        currentTime =  timeFormat.format(calendar.getTime());
 
-        OrderIdentifierKey = getCurrentDate +"-"+ getCurrentTime;
+        OrderIdentifierKey = currentDate +"-"+ currentTime;
 
         final DatabaseReference OrdersRef = FirebaseDatabase.getInstance("https://technorange-3b319-default-rtdb.asia-southeast1.firebasedatabase.app").getReference().child("Orders");
 
         final HashMap<String, Object> orderMap = new HashMap<>();
-            orderMap.put("order id", OrderIdentifierKey);
-            orderMap.put("date", getCurrentDate);
-            orderMap.put("time", getCurrentTime);
-            orderMap.put("ordered by", fullNameEdt.getText().toString());
-            orderMap.put("shipping address", shippingAddrEdt.getText().toString());
+            orderMap.put("order_id", OrderIdentifierKey);
+            orderMap.put("date", currentDate);
+            orderMap.put("time", currentTime);
+            orderMap.put("ordered_by", fullNameEdt.getText().toString());
+            orderMap.put("shipping_address", shippingAddrEdt.getText().toString());
             orderMap.put("phone", phoneEdt.getText().toString());
             orderMap.put("email", emailEdt.getText().toString());
-            orderMap.put("order total", ItemTotal);
-            orderMap.put("state", "Order placed");
+            orderMap.put("order_total", ItemTotal);
 
             OrdersRef.child(CurrentUser.currentOnlineUser.getUsername()).child(OrderIdentifierKey).child("OrderInfo")
                     .updateChildren(orderMap).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -173,12 +173,12 @@ public class CheckoutActivity extends AppCompatActivity {
                                 .getReference("CartList/"+CurrentUser.currentOnlineUser.getUsername()+"/CartProducts");
 
                         DatabaseReference toPath = FirebaseDatabase.getInstance("https://technorange-3b319-default-rtdb.asia-southeast1.firebasedatabase.app")
-                                .getReference("Orders/"+CurrentUser.currentOnlineUser.getUsername()+"/"+OrderIdentifierKey+"/OrderProducts");
+                                .getReference("OrderProducts");
 
                         fromPath.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                toPath.setValue(snapshot.getValue(), new DatabaseReference.CompletionListener() {
+                                toPath.updateChildren((Map<String, Object>) snapshot.getValue(), new DatabaseReference.CompletionListener() {
                                     @Override
                                     public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                         if (error != null) {
@@ -190,21 +190,70 @@ public class CheckoutActivity extends AppCompatActivity {
                                             FirebaseDatabase.getInstance("https://technorange-3b319-default-rtdb.asia-southeast1.firebasedatabase.app").getReference()
                                                     .child("CartList").child(CurrentUser.currentOnlineUser.getUsername())
                                                     .removeValue()
-                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<Void> task) {
-                                                                    if (task.isSuccessful()) {
-                                                                        Toast.makeText(CheckoutActivity.this, "Your order placed", Toast.LENGTH_LONG).show();
-                                                                        Intent paymentActivity = new Intent(CheckoutActivity.this, PaymentActivity.class);
-                                                                        paymentActivity.putExtra("OrderID", OrderIdentifierKey);
-                                                                        paymentActivity.putExtra("Total", TotalTxt);
-                                                                        startActivity(paymentActivity);
-                                                                    }
-                                                                    else {
-                                                                        Toast.makeText(CheckoutActivity.this, "Something went wrong..Please try again", Toast.LENGTH_SHORT).show();
-                                                                    }
-                                                                }
-                                                            });
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                orderProgressDialog.dismiss();
+                                                                Toast.makeText(CheckoutActivity.this, "Your order placed", Toast.LENGTH_LONG).show();
+                                                                Intent paymentActivity = new Intent(CheckoutActivity.this, PaymentActivity.class);
+                                                                paymentActivity.putExtra("OrderID", OrderIdentifierKey);
+                                                                paymentActivity.putExtra("Total", TotalTxt);
+                                                                startActivity(paymentActivity);
+                                                            }
+                                                            else {
+                                                                orderProgressDialog.dismiss();
+                                                                Toast.makeText(CheckoutActivity.this, "Something went wrong..Please try again", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    });
+
+                                            DatabaseReference OrderProductsRef1 = FirebaseDatabase.getInstance("https://technorange-3b319-default-rtdb.asia-southeast1.firebasedatabase.app")
+                                                    .getReference().child("OrderProducts");
+                                            OrderProductsRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    for (DataSnapshot orderProductSnapshot : snapshot.getChildren()) {
+                                                        for(DataSnapshot orderProductsPropSnapshot : orderProductSnapshot.getChildren()) {
+                                                            String orderProductsProp = orderProductsPropSnapshot.getKey();
+
+                                                            if (orderProductsProp.equals("state")) {
+                                                                orderProductsPropSnapshot.getRef().setValue("Order placed");
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+                                                    orderProgressDialog.dismiss();
+                                                    Toast.makeText(CheckoutActivity.this, "Something went wrong..Please try again", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+
+                                            // use different Ref name, since same in inside
+                                            DatabaseReference OrderProductsRef2 = FirebaseDatabase.getInstance("https://technorange-3b319-default-rtdb.asia-southeast1.firebasedatabase.app")
+                                                    .getReference().child("OrderProducts");
+
+                                            OrderProductsRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    for (DataSnapshot orderProductSnapshot : snapshot.getChildren()) {
+
+                                                        DatabaseReference OrderIdRef = orderProductSnapshot.child("order_id").getRef();
+                                                        DatabaseReference OrderedByRef = orderProductSnapshot.child("ordered_by").getRef();
+                                                        OrderIdRef.setValue(OrderIdentifierKey);
+                                                        OrderedByRef.setValue(CurrentUser.currentOnlineUser.getUsername());
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+                                                    orderProgressDialog.dismiss();
+                                                    Toast.makeText(CheckoutActivity.this, "Something went wrong..Please try again", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+
                                         }
                                     }
                                 });
@@ -270,7 +319,7 @@ public class CheckoutActivity extends AppCompatActivity {
                     }
                 };
 
-        checkoutItemsRecylv.setAdapter(firebaseCheckoutRecylAdapter);
+        checkoutItemsRecylV.setAdapter(firebaseCheckoutRecylAdapter);
         firebaseCheckoutRecylAdapter.startListening();
 
     }
