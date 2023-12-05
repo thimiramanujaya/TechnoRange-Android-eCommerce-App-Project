@@ -194,28 +194,41 @@ public class PaymentActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            paymentProgressDialog.dismiss();
 
-                            DatabaseReference StateRef = FirebaseDatabase.getInstance("https://technorange-3b319-default-rtdb.asia-southeast1.firebasedatabase.app")
-                                    .getReference().child("Orders").child(CurrentUser.currentOnlineUser.getUsername()).child(OrderId).child("OrderInfo");
+                            DatabaseReference OrderProductsRef3 = FirebaseDatabase.getInstance("https://technorange-3b319-default-rtdb.asia-southeast1.firebasedatabase.app")
+                                    .getReference().child("OrderProducts");
 
-                            StateRef.child("state").setValue("Payment completed").addOnCompleteListener(new OnCompleteListener<Void>() {
+                            OrderProductsRef3.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(PaymentActivity.this, "Payment Successful ✅ Thank you for Shopping with Us", Toast.LENGTH_LONG).show();
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot orderProductSnapshot : snapshot.getChildren()) {
+                                        for (DataSnapshot orderProductsPropSnapshot : orderProductSnapshot.getChildren()) {
+                                            String orderProductProp =
+                                                    orderProductsPropSnapshot.getKey();
 
-                                        Intent homeIntent4 = new Intent(PaymentActivity.this, CustomerActivity.class);
-                                        homeIntent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(homeIntent4);
-                                        Toast.makeText(getApplicationContext(), "Your Order will be Delivered soon..Happy Shopping 🎉", Toast.LENGTH_LONG).show();
-                                        finish();
-                                    }
-                                    else {
-                                        Toast.makeText(PaymentActivity.this, "Something went wrong..Please try again", Toast.LENGTH_SHORT).show();
+                                            if (orderProductProp.equals("state")) {
+                                                orderProductsPropSnapshot.getRef().setValue("Payment Completed");
+                                            }
+                                        }
                                     }
                                 }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Toast.makeText(PaymentActivity.this, "Something went wrong..Please try again", Toast.LENGTH_SHORT).show();
+                                }
                             });
+
+                            paymentProgressDialog.dismiss();
+                            Toast.makeText(PaymentActivity.this, "Payment Successful ✅ Thank you for Shopping with Us", Toast.LENGTH_LONG).show();
+
+                            Intent homeIntent4 =
+                                    new Intent(PaymentActivity.this, CustomerActivity.class);
+                            homeIntent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(homeIntent4);
+                            Toast.makeText(getApplicationContext(), "Your Order will be Delivered soon..Happy Shopping 🎉", Toast.LENGTH_LONG).show();
+                            finish();
+
                         }
                         else {
                             paymentProgressDialog.dismiss();
